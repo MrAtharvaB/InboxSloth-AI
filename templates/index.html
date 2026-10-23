@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="InboxSloth AI turns noisy group chats into a clear daily briefing using local AI.">
+  <title>InboxSloth AI | Smart Message Summarizer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="InboxSloth AI home"><span class="brand-mark">🦥</span><span>InboxSloth <b>AI</b></span></a>
+    <div class="status-pill" id="ai-status" aria-live="polite"><span class="status-dot"></span><span>Checking local AI...</span></div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">LOCAL-FIRST PRODUCTIVITY</p>
+      <h1>Let AI read the noise.<br><em>You focus on what matters.</em></h1>
+      <p class="hero-copy">Turn a long group chat export into a calm, actionable daily briefing — privately, with <strong>{{ model }}</strong> running on your machine.</p>
+    </section>
+
+    <section class="workspace-card" aria-labelledby="upload-heading">
+      <div class="card-heading">
+        <div><span class="step-label">STEP 01</span><h2 id="upload-heading">Bring your chat</h2></div>
+        <span class="format-label">.TXT ONLY · MAX 1 MB</span>
+      </div>
+      <label class="drop-zone" id="drop-zone" for="chat-file">
+        <input id="chat-file" type="file" accept=".txt,text/plain" hidden>
+        <span class="upload-icon">↑</span>
+        <span class="drop-title">Drop your chat export here</span>
+        <span class="drop-subtitle">or <u>browse from your computer</u></span>
+        <span class="file-name" id="file-name">No file selected</span>
+      </label>
+      <div class="actions">
+        <button class="button secondary" id="sample-button" type="button">✦ Try Sample Chat</button>
+        <button class="button primary" id="generate-button" type="button" disabled>Generate My Digest <span>→</span></button>
+      </div>
+      <p class="form-message" id="form-message" role="alert"></p>
+    </section>
+
+    <section class="results hidden" id="results" aria-labelledby="results-heading">
+      <div class="results-heading">
+        <div><span class="step-label">YOUR MORNING READ</span><h2 id="results-heading">Your Daily Briefing</h2><p id="generated-at"></p></div>
+        <button class="button copy-button" id="copy-button" type="button">Copy Digest</button>
+      </div>
+      <div class="result-grid">
+        <article class="result-card summary-card"><span class="card-icon">✦</span><h3>Quick Summary</h3><p id="summary"></p></article>
+        <article class="result-card"><span class="card-icon green">◆</span><h3>Key Points</h3><ul id="key-points"></ul></article>
+        <article class="result-card"><span class="card-icon purple">◈</span><h3>Announcements</h3><ul id="announcements"></ul></article>
+        <article class="result-card wide"><span class="card-icon orange">✓</span><h3>Action Items</h3><div id="tasks" class="task-list"></div></article>
+        <article class="result-card"><span class="card-icon blue">◷</span><h3>Deadlines & Events</h3><div id="deadlines"></div></article>
+        <article class="result-card"><span class="card-icon pink">?</span><h3>Pending Decisions</h3><ul id="pending-decisions"></ul></article>
+      </div>
+      <p class="verification-note">Important: verify deadlines against the original conversation. AI can miss context.</p>
+    </section>
+
+    <aside class="privacy"><span>◉</span><div><strong>Your messages stay close to home.</strong><br>InboxSloth processes chats in memory and sends them only to your local Ollama instance. It does not save uploads. Local processing reduces exposure but does not guarantee complete privacy — review your operating system, model runtime, backups, and other processes.</div></aside>
+  </main>
+  <footer><span>Built with Flask · Gemma 3 · Ollama</span><span>Slow and Steady · <b>#devchallenge</b> <b>#hf26challenge</b></span></footer>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
